@@ -10,13 +10,13 @@
         <meta name="copyright" content="Speed Readere" />
         <meta name="classification" content="public" />
         <meta name="resource-type" content="document" />        
-
+        <link rel="stylesheet" href="lib/bootstrap.min.css"/>
         <link rel="stylesheet" href="css/style.css"/>
        
     </head>
     <body>
         
-        <div id="container">
+        <div class="container" id="container">
             <h1>SPEED READING</h1>        
             <div class="sleek">            
                 <h1>Paste your text to the textbox and get the word(s) count</h1>
@@ -37,9 +37,14 @@
                 
             </div>
             <div style="margin-top:1em;">
+            
             <button id="go">START</button>
+            
             <button id="stop">STOP</button>
-            <button onClick="location.reload(); return false;" id="reset">RESET</button>            
+            
+            <button onClick="location.reload(); return false;" id="reset">RESET</button>  
+            
+            <button class="btn">Clear</button>          
                 <button href="#" id="incfont">A+</button>
                     <button href="#" id="decfont">A-</button>
                     <!--<input id="milliseconds" type="number" value="1000" step="25" min="0" max="1000"/>

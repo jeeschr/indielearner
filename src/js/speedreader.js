@@ -8,6 +8,7 @@ var wordCount = 0;
 var wordCountBox = $('#wordCountBox');
 var timepassed = $('#timepassed');
 var textRead = $('#textRead');
+var savedValue;
 
 
 go.on("click", function (e) {
@@ -19,7 +20,6 @@ function startSim() {
 
     var speed = $('#speed').val();
     // var speed = 120;
-    //60 wpm == 1 word per sec
     var delay = 1/((speed/60)/1000);
     console.log('speed: ',speed);
     console.log('delay: ',delay);
@@ -33,20 +33,19 @@ function startSim() {
 
     var arrCount = wordArray.length;
     console.log('arrCount: ',arrCount);
-    var alreadyRead = [];
+    var alreadyRead = new Array();
 
 
-    (function fn(n){   
+    var t = (function fn(n){   
       
-        console.log('wordArray: ',wordArray[n]);
-
-
-
+        // console.log('wordArray: ',wordArray[n]);
 
         var pos = n;
         if (pos < 0) {
             pos = 0;
         }
+        console.log('alreadyRead: ',alreadyRead);
+        console.log('wordArray: ', wordArray[pos]);
         alreadyRead.push(wordArray[pos]);
         wordArray[pos] = '<span class="grayx">' + wordArray[pos] + '</span>';
         if (pos > (boldWords - 1)) {
@@ -59,30 +58,13 @@ function startSim() {
             triggerDone();
         }
         $('#sim span:last')[0].scrollIntoView(false);
-
-
-
-        if(n<arrCount)
-            setTimeout(function(){
+        console.log('savedValue: ',savedValue);
+        if(n<(arrCount-1))
+            savedValue = setTimeout(function(){
               fn(++n);
             },(delay));
     }(0));
-
-    // function doSetTimeout(i) {
-        
-    //     setTimeout(function(ind) { 
-    //         console.log('hi there');
-    //         console.log('wordArray: ',wordArray[ind]);
-    //     }, 1000*1000*i);
-    // }
-    // (function fn(n){   
-    //   console.log( n );   
-    //   if(n<9)
-    //     setTimeout(function(){
-    //       fn(++n);
-    //     },800);
-    // }(0));
-    
+    console.log('t: ',t);
     // for (var i = 0; i <= arrCount; i++) {
         // doSetTimeout(i);
         // console.log('in loop');
@@ -114,20 +96,31 @@ function startSim() {
     // }
     // Function done
     function triggerDone() {
-        wordCountBox.text(wordCount + ' Words Read');
-        var timeEnd = $.now();
-        var timeRes = timeEnd - timeStart;
-        timeRes = parseInt(timeRes);
-        timeRes = timeRes / 1000;
-        timepassed.text(" in " + timeRes + " Seconds.");
-        alreadyRead = alreadyRead.join("");
-        textRead.text(alreadyRead);
-        var summary = $('#summary');
-        summary.show();
-        return;
+        if (savedValue){
+            clearTimeout(savedValue);
+        }
+        // wordCountBox.text(wordCount + ' Words Read');
+        // var timeEnd = $.now();
+        // var timeRes = timeEnd - timeStart;
+        // timeRes = parseInt(timeRes);
+        // timeRes = timeRes / 1000;
+        // timepassed.text(" in " + timeRes + " Seconds.");
+        // alreadyRead = alreadyRead.join("");
+        // textRead.text(alreadyRead);
+        // var summary = $('#summary');
+        // summary.show();
+        // return;
+    }
+    function resume(){
+        timerId = window.setTimeout(callback, remaining);
     }
     stop.on("click", function (e) {
         e.preventDefault();
+    //     $.each(reading_timers, function(i, timer) {
+    //         if (timer) {
+    //             clearTimeout(timer);
+    //         }
+    // });
         triggerDone();
     });
 }
