@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Speed Reader</title>
+       
         <meta charset="utf-8" />
         <meta name="description" content="Speed Reading" />
         <meta name="keywords" content="Speed Reading, Word Count,Word Counter" />
@@ -10,95 +11,103 @@
         <meta name="classification" content="public" />
         <meta name="resource-type" content="document" />        
 
-        <style type="text/css">@import url(css/style.css);</style>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script type="text/javascript" src="js/jquery.js"></script>
-        <script type="text/javascript" src="js/jquery.1.9.1.min.js"></script>
-        <script type="text/javascript" src="js/jquery.1.11.0.js"></script>
-        <script type="text/javascript" src="js/counter.js"></script>
+        <link rel="stylesheet" href="css/style.css"/>
+       
+    </head>
+    <body>
+        
+        <div id="container">
+            <h1>SPEED READING</h1>        
+            <div class="sleek">            
+                <h1>Paste your text to the textbox and get the word(s) count</h1>
+                
+                <div class="sleek-body">
+                    <ul>
+                        <li>
+                            <div class="result"><h2><span id="wordCount">0</span></h2></div>
+                            <div class="desc"><h2 id="count">Words Count</h2></div>                        
+                        </li>                    
+                    </ul>
+                    <div class="summary" id="summary">
+                        <span id="wordCountBox"></span>
+                        <span id="timepassed"></span>
+                        <!--<p id="textRead"></p>-->
+                    </div>
+                </div>
+                
+            </div>
+            <div style="margin-top:1em;">
+            <button id="go">START</button>
+            <button id="stop">STOP</button>
+            <button onClick="location.reload(); return false;" id="reset">RESET</button>            
+                <button href="#" id="incfont">A+</button>
+                    <button href="#" id="decfont">A-</button>
+                    <!--<input id="milliseconds" type="number" value="1000" step="25" min="0" max="1000"/>
+                    <span for="speed">in milliseconds</span>-->
+                    <input id="speed" type="number" value="120" step="10" min="0" max="1000"/>
+                    <span style="color:white;" for="speed">WPM</span>
+                    
+                    <!--<label for="speed">Reading speed in miliseconds (0 &#x2013; 1000):<br/>
+                        <input id="speed" type="number" value="200" step="25" min="0" max="1000" />
+                        </label>-->
+                    <select onchange="ChangeFont (this);" name="decision" >
+                        <option>Arial</option>
+                        <option selected="selected">Times New Roman</option>
+                        <option>Sans-Serif</option>
+                        <option>Serif</option>
+                        <option>Times</option>
+                        <option>Georgia</option>
+                        <option>Verdana</option>
+                        <option>Courier New</option>
+                        <option>Courier</option>
+                        <option>Lucida Console</option>
+                        <option>Monotype Corsiva</option>
+                        <option>Century Gothic</option>
+                        <option>Comic Sans MS</option>                
+                        <option>Monospace</option>
+                        <option>helvetica</option>
+                    </select>
+                </div>
+                
+                        
+                <div id="sim" cols="2" rows="2"></div>       
+                <!--<div class="row">
+                    <label for="night-mode" id="bold">Night mode:<input type="checkbox" id="night-mode" /></label>               
+                </div>-->       
+        </div>
+        
+        <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script> -->
+        
+        
+        <!-- // <script type="text/javascript" src="js/jquery.js"></script> -->
+        <!-- // <script type="text/javascript" src="js/jquery.1.9.1.min.js"></script> -->
+        <!-- // <script type="text/javascript" src="js/jquery.1.11.0.js"></script> -->
+        
+        
         <!--<script type="text/javascript">
         function doClear() {
         $('#sim').text('');
         $('#summary').text('');        
         }
         </script>-->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="js/counter.js"></script>
         <script type="text/javascript">
-        function ChangeFont (selectTag) {
-            // Returns the index of the selected option
-            var whichSelected = selectTag.selectedIndex;
+            function ChangeFont (selectTag) {
+                // Returns the index of the selected option
+                var whichSelected = selectTag.selectedIndex;
 
-            // Returns the selected options values
-            var selectState = selectTag.options[whichSelected].text;
+                // Returns the selected options values
+                var selectState = selectTag.options[whichSelected].text;
 
-            var fontTest = document.getElementById ("sim");
-            fontTest.style.fontFamily = selectState;
-        }
-    </script>
-    </head>
-    <body>
-        
-        <div id="container">
-        <h1>SPEED READING</h1>        
-        <div class="sleek">            
-            <h1>Paste your text to the textbox and get the word(s) count</h1>
-            
-            <div class="sleek-body">
-                <ul>
-                    <li>
-                        <div class="result"><h2><span id="wordCount">0</span></h2></div>
-                        <div class="desc"><h2 id="count">Words Count</h2></div>                        
-                    </li>                    
-                </ul>
-                <div class="summary" id="summary">
-                    <span id="wordCountBox"></span>
-                    <span id="timepassed"></span>
-                    <!--<p id="textRead"></p>-->
-                </div>
-            </div>
-            
-        </div>
-            <div style="margin-top:1em;">
-        <button id="go">START</button>
-        <button id="stop">STOP</button>
-        <button onClick="location.reload(); return false;" id="reset">RESET</button>            
-            <button href="#" id="incfont">A+</button>
-                <button href="#" id="decfont">A-</button>
-                <!--<input id="milliseconds" type="number" value="1000" step="25" min="0" max="1000"/>
-                <span for="speed">in milliseconds</span>-->
-                <input id="speed" type="number" value="120" step="10" min="0" max="1000"/>
-                <span for="speed">WPM</span>
-                
-                <!--<label for="speed">Reading speed in miliseconds (0 &#x2013; 1000):<br/>
-                    <input id="speed" type="number" value="200" step="25" min="0" max="1000" />
-                    </label>-->
-                <select onchange="ChangeFont (this);" name="decision" >
-                    <option>Arial</option>
-                    <option selected="selected">Times New Roman</option>
-                    <option>Sans-Serif</option>
-                    <option>Serif</option>
-                    <option>Times</option>
-                    <option>Georgia</option>
-                    <option>Verdana</option>
-                    <option>Courier New</option>
-                    <option>Courier</option>
-                    <option>Lucida Console</option>
-                    <option>Monotype Corsiva</option>
-                    <option>Century Gothic</option>
-                    <option>Comic Sans MS</option>                
-                    <option>Monospace</option>
-                    <option>helvetica</option>
-                </select>
-            </div>
-            
-                    
-            <div id="sim" cols="2" rows="2"></div>       
-            <!--<div class="row">
-                <label for="night-mode" id="bold">Night mode:<input type="checkbox" id="night-mode" /></label>               
-            </div>-->       
-        </div>
+                var fontTest = document.getElementById ("sim");
+                fontTest.style.fontFamily = selectState;
+            }
+        </script>
+
         <script type="text/javascript" src="js/speedreader.js"></script>
-        <script src="js/app.js"></script>        
+        <!-- // <script src="js/app.js"></script>         -->
         <script type="text/javascript" src="js/fontsize.js"></script>        
 </body>
 </html>

@@ -1,4 +1,9 @@
-body {background-color:#333; font-family: 'Times New Roman', Courier New; color:#393939; padding: 0 5px 0 5px;}
+body {
+    background-color:#333; 
+    font-family: 'Times New Roman', Courier New; 
+    color:#393939; 
+    padding: 0 5px 0 5px;
+}
 /*
 textarea {background-color:#e3e5e1;font-family: 'Times New Roman',Courier New; height:100%; width: 100%;border:1px solid #255E6E;}
 */
