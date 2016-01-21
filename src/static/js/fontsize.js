@@ -4,8 +4,8 @@
 
         curSize= parseInt($('#sim').css('font-size')) + 2;
 
-  if(curSize<=84)
-        $('#sim').css('font-size', curSize);
+        if(curSize<=84)
+          $('#sim').css('font-size', curSize);
 
         }); 
 
@@ -13,9 +13,8 @@
 
         curSize= parseInt($('#sim').css('font-size')) - 2;
 
-  if(curSize>=10)
-
-        $('#sim').css('font-size', curSize);
+        if(curSize>=10)
+              $('#sim').css('font-size', curSize);
 
         });
 

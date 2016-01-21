@@ -2,7 +2,9 @@
   "name": "speedr",
   "version": "0.0.1",
   "dependencies": {
-    "mjolnic-bootstrap-colorpicker": "~2.3.0"
+    "mjolnic-bootstrap-colorpicker": "~2.3.0",
+    "backbone": "~1.2.3",
+    "underscore": "~1.8.3"
   },
   "private": true,
   "devDependencies": {

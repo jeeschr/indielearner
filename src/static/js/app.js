@@ -72,6 +72,9 @@ function startSim(){
             triggerDone();
         }
         // $('#sim span:last')[0].scrollIntoView(false);
+        // console.log('scroll: ',$('#sim span:last'));
+        // $('#sim').scrollLeft($('#sim span:last')[0]);
+        // $('#sim').scrollLeft($('#sim span:last').position().left);
         // console.log('savedValue: ',savedValue);
         nn=n;
         if(n<(arrCount-1))
@@ -120,6 +123,9 @@ var keepGoing = true;
     var clear = $('#clear-btn');
     var pause = $('#pause-btn');
     var reset = $('#reset-btn');
+    var incfont = $('#incfont-btn');
+    var decfont = $('#decfont-btn');
+    var fontdec = $('select[name=font-decision]');
     var wordCount = 0;
     var wordCountBox = $('#wordCountBox');
     var textbox = $('#sim');
@@ -167,8 +173,39 @@ var keepGoing = true;
         timeoutID=0;
         clearSim();
     });
+    incfont.on("click", function(e){
+        // console.log('clicked incfont');
+        curSize= parseInt($('#sim').css('font-size')) + 2;
+
+        if(curSize<=84)
+          $('#sim').css('font-size', curSize);
+    });
+    decfont.on("click", function(e){
+        curSize= parseInt($('#sim').css('font-size')) - 2;
+        if(curSize>=10)
+              $('#sim').css('font-size', curSize);
+    });
+    fontdec.on("change", function(e){
+        console.log('change font: ',this.value);
+        // var whichSelected = e.selectedIndex;
+        // var selectState = e.options[whichSelected].text;
+        var fontTest = document.getElementById("sim");
+        // fontTest.style.fontFamily = selectState;
+        fontTest.style.fontFamily=this.value;
+    });
 
 })(jQuery);
+
+// function ChangeFont (selectTag) {
+//     // Returns the index of the selected option
+//     var whichSelected = selectTag.selectedIndex;
+
+//     // Returns the selected options values
+//     var selectState = selectTag.options[whichSelected].text;
+
+//     var fontTest = document.getElementById ("sim");
+//     fontTest.style.fontFamily = selectState;
+// }
 
     // $('#night-mode').on('change', function() {
     //     if($(this).is(':checked')) {

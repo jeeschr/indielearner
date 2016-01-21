@@ -48,8 +48,6 @@
                 <button id="clear-btn" class="btn btn-warning btn-lg">Clear</button>
             </div>
             <div class="col-xs-12" id="select-col">
- <!--                <button class="btn btn-lg btn-primary" id="incfont">A+</button>
-                <button class="btn btn-lg btn-primary" id="decfont">A-</button> -->
      <!--            <div class="btn-lg btn btn-success">
                     Text color
                     <span class="add-on"><i></i></span>
@@ -73,11 +71,27 @@
         <div class="row" id="stats-row">
             <div class="col-xs-12">
                 <span id="wordCountBox">0</span> words read in <span id="timepassed">0</span> second(s)
-                <!-- <div class="summary" id="summary"> -->
-                    
-                    
-                        <!--<p id="textRead"></p>-->
-                <!-- </div> -->
+                <div id="font-size-btn">
+                    <select name="font-decision" >
+                        <option>Arial</option>
+                        <option selected="selected">Times New Roman</option>
+                        <option>Sans-Serif</option>
+                        <option>Serif</option>
+                        <option>Times</option>
+                        <option>Georgia</option>
+                        <option>Verdana</option>
+                        <option>Courier New</option>
+                        <option>Courier</option>
+                        <option>Lucida Console</option>
+                        <option>Monotype Corsiva</option>
+                        <option>Century Gothic</option>
+                        <option>Comic Sans MS</option>                
+                        <option>Monospace</option>
+                        <option>Helvetica</option>
+                    </select>
+                    <button class="btn btn-lg btn-primary" id="incfont-btn">A+</button>
+                    <button class="btn btn-lg btn-primary" id="decfont-btn">A-</button> 
+                </div>
             </div>
         </div>
 
@@ -93,19 +107,9 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script type="text/javascript" src="static/lib/bootstrap-colorpicker.min.js"></script>
+        <script type="text/javascript" src="static/lib/underscore-min.js"></script>
+        <script type="text/javascript" src="static/lib/backbone-min.js"></script>
         <!-- <script type="text/javascript" src="static/js/counter.js"></script> -->
-        <script type="text/javascript">
-            // function ChangeFont (selectTag) {
-            //     // Returns the index of the selected option
-            //     var whichSelected = selectTag.selectedIndex;
-
-            //     // Returns the selected options values
-            //     var selectState = selectTag.options[whichSelected].text;
-
-            //     var fontTest = document.getElementById ("sim");
-            //     fontTest.style.fontFamily = selectState;
-            // }
-        </script>
 
         <!-- // <script type="text/javascript" src="js/speedreader.js"></script> -->
         <!-- // <script src="js/app.js"></script>         -->
