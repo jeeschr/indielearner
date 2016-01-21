@@ -1,7 +1,9 @@
 {
   "name": "speedr",
   "version": "0.0.1",
-  "dependencies": {},
+  "dependencies": {
+    "mjolnic-bootstrap-colorpicker": "~2.3.0"
+  },
   "private": true,
   "devDependencies": {
     "bootstrap": "latest"

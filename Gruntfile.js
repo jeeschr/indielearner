@@ -7,10 +7,10 @@ module.exports = function(grunt) {
     // pkg: grunt.file.readJSON('package.json'),
 
     watch: {
-      // styles: {
-      //   files: '_public/css/*.css',
-      //   tasks: ['postcss']
-      // },
+      styles: {
+        files: 'public/css/*.css',
+        tasks: ['postcss']
+      },
       options: {
         livereload: true,
       },
@@ -21,19 +21,19 @@ module.exports = function(grunt) {
         spawn: false
       }
     },
-    // postcss: {
-    //   options: {
-    //     processors: [
-    //       require('precss')(),
-    //       require('autoprefixer-core')(),
-    //       require('cssnano')()
-    //     ]
-    //   },
-    //   dist: {
-    //     src: '_public/css/*.css',
-    //     dest: 'app/static/css/main.min.css'
-    //   }
-    // },
+    postcss: {
+      options: {
+        processors: [
+          require('precss')(),
+          require('autoprefixer-core')(),
+          require('cssnano')()
+        ]
+      },
+      dist: {
+        src: 'public/css/*.css',
+        dest: 'src/static/css/style.min.css'
+      }
+    },
 
     // cssnano: {
     //   dist: {
@@ -52,9 +52,9 @@ module.exports = function(grunt) {
       dev: {
         bsFiles: {
           src : [
-            'src/css/*.*',
+            'src/static/css/*.*',
             'src/*.html',
-            'src/js/*.*'
+            'src/static/js/*.*'
           ]
         },
         options: {
@@ -71,7 +71,7 @@ module.exports = function(grunt) {
   });
 
   // grunt.loadNpmTasks('grunt-contrib-imagemin');
-  // grunt.loadNpmTasks('grunt-postcss');
+  grunt.loadNpmTasks('grunt-postcss');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-browser-sync');
   // grunt.loadNpmTasks('grunt-contrib-jshint');
