@@ -19,31 +19,38 @@
     // return;
 };
 
-function startSim() {
-
+function setSim() {
+    nn=0;
     var speed = $('#speed').val();
     // var speed = 120;
-    var delay = 1/((speed/60)/1000);
+    delay = 1/((speed/60)/1000);
     timeStart = $.now();
     // console.log('speed: ',speed);
     // console.log('delay: ',delay);
 
-    var boldWords = speed / 60;
+    boldWords = speed / 60;
     boldWords = boldWords < 1 ? 1 : Math.round(boldWords);
     timeStart = $.now();
     var sim = $('#sim').text();
     var value;
-    var wordArray = sim.split(/[\s]+/);
+    wordArray = sim.split(/[\s]+/);
     // wordArray=value;
-    var simWrap = $('#sim');
+    simWrap = $('#sim');
     
 
-    var arrCount = wordArray.length;
+    arrCount = wordArray.length;
     // console.log('arrCount: ',arrCount);
-    var alreadyRead = new Array();
+    alreadyRead = new Array();
     wordCount = 0;
 
-    var t = (function fn(n){   
+
+    // console.log('t: ',t);
+ 
+};
+function startSim(){
+    (function fn(n){  
+        console.log('n: ',n); 
+        if(keepGoing){
         // console.log('wordArray: ',wordArray[n]);
         var pos = n;
         if (pos < 0) {
@@ -66,15 +73,14 @@ function startSim() {
         }
         // $('#sim span:last')[0].scrollIntoView(false);
         // console.log('savedValue: ',savedValue);
+        nn=n;
         if(n<(arrCount-1))
             timeoutID = setTimeout(function(){
               fn(++n);
             },(delay));
-    }(0));
-    // console.log('t: ',t);
-
+       }
+    }(nn));
 };
-
 function counter() {
     // console.log('running counter: ',$(this).html());
     // value = $(this).html().replace(/<br>+/g, ' ').replace(/(<([^>]+)>)/ig, '');
@@ -96,7 +102,14 @@ function clearSim(){
     // sim.text()='';
     sim.empty();
 };
+
+function pauseSim(){
+    console.log('pauseSim');
+};
+
 var timeoutID;
+var keepGoing = true;
+
 (function(){
     
     $('.demo2').colorpicker({
@@ -105,6 +118,8 @@ var timeoutID;
     
     var start = $('#start-btn');
     var clear = $('#clear-btn');
+    var pause = $('#pause-btn');
+    var reset = $('#reset-btn');
     var wordCount = 0;
     var wordCountBox = $('#wordCountBox');
     var textbox = $('#sim');
@@ -114,14 +129,42 @@ var timeoutID;
     textbox.on('change keydown keypress keyup blur focus', counter);
 
     start.on("click", function (e) {
-        // e.preventDefault();
+        e.stopPropagation();
+        window.clearTimeout(timeoutID);
+        setSim();
         startSim();
+    });
+    var pauseContinue = true;
+    pause.on("click", function(e){
+        if (timeoutID){
+            e.stopPropagation();
+            if (pauseContinue){
+                // window.clearTimeout(timeoutID);
+                keepGoing=false;
+                pause.text("Resume");
+                pauseContinue = false;
+            }
+            else{
+                console.log('keep going, nn: ',nn);
+                keepGoing=true;
+                startSim();
+                pause.text("Pause");
+                // window.setTimeout
+                pauseContinue = true;
+            }
+        }
+            // pauseSim();
+    });
+    reset.on("click", function(e){
+        e.stopPropagation();
+        window.clearTimeout(timeoutID);
     });
     clear.on("click", function(e){
         // e.preventDefault
         e.stopPropagation();
         // console.log('timeoutID: ',timeoutID);
         window.clearTimeout(timeoutID);
+        timeoutID=0;
         clearSim();
     });
 
