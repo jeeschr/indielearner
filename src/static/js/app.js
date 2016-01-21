@@ -47,6 +47,11 @@ function setSim() {
     // console.log('t: ',t);
  
 };
+function setSimSpeed(){
+    delay = 1/((speed/60)/1000);
+    boldWords = speed / 60;
+    boldWords = boldWords < 1 ? 1 : Math.round(boldWords);
+};
 function startSim(){
     (function fn(n){  
         console.log('n: ',n); 
@@ -125,6 +130,9 @@ var keepGoing = true;
     var reset = $('#reset-btn');
     var incfont = $('#incfont-btn');
     var decfont = $('#decfont-btn');
+    
+    var getSpeed = $('#speed');
+
     var fontdec = $('select[name=font-decision]');
     var wordCount = 0;
     var wordCountBox = $('#wordCountBox');
@@ -133,7 +141,12 @@ var keepGoing = true;
     //     this.contentEditable = true;
     // });
     textbox.on('change keydown keypress keyup blur focus', counter);
-
+    getSpeed.on("change", function(e){
+        console.log('speed change');
+        e.stopPropagation();
+        speed = getSpeed.val();
+        setSimSpeed();
+    });
     start.on("click", function (e) {
         e.stopPropagation();
         window.clearTimeout(timeoutID);
