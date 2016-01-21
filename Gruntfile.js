@@ -54,7 +54,10 @@ module.exports = function(grunt) {
           src : [
             'src/static/css/*.*',
             'src/*.html',
-            'src/static/js/*.*'
+            'src/static/js/*.*',
+            'src/static/js/collections/*.*',
+            'src/static/js/models/*.*',
+            'src/static/js/views/*.*'
           ]
         },
         options: {

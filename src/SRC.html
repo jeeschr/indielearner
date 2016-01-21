@@ -39,34 +39,46 @@
     <div class="container" id="main">
         <div class="row" id="ctrl-row">
             <div class="col-xs-12" id="btn-col">
-                <button class="btn btn-default btn-lg" type="button">
-                  Word Count <span id="wordCount" class="badge">0</span>
-                </button>
-                <button id="start-btn" class="btn btn-success btn-lg">Start</button>
-                <button id="pause-btn" class="btn btn-primary btn-lg">Pause</button>
-                <button id="reset-btn" class="btn btn-danger btn-lg">Reset</button>
-                <button id="clear-btn" class="btn btn-warning btn-lg">Clear</button>
+                <button id="start-btn" class="btn btn-primary btn-lg">Start</button>
+                <button id="reset-btn" class="btn btn-primary btn-lg">Reset</button>
+                <button id="clear-btn" class="btn btn-primary btn-lg">Clear</button>
             </div>
             <div class="col-xs-12" id="select-col">
-     <!--            <div class="btn-lg btn btn-success">
-                    Text color
-                    <span class="add-on"><i></i></span>
-                </div> -->
-    <!--             <div class="demo2">
-                    Highlight color
-                    <button class="add-on btn btn-success"> <i></i></button>
-                </div> -->
-                <!-- <button class=""></button> -->
-
+                <div class="input-wrapper">
+                <input id="numWords" type="number" value="1" step="1" min="0" max="1000"/>
+                <span style="color:white;" for="speed">word(s) highlighted</span>
+                </div>
+                <div class="input-wrapper">
                 <input id="speed" type="number" value="120" step="10" min="0" max="1000"/>
                 <span style="color:white;" for="speed">WPM</span>
+                </div>
             </div>
         </div>
 
         <div class="row" id="text-row">
-            <div class="col-xs-12">
-                <div contenteditable id="sim" cols="2" rows="2"></div>
+            <div class="col-xs-12 col-sm-6">
+                <button class="btn btn-default btn-lg" type="button">
+                  Word Count <span id="wordCount" class="badge">0</span>
+                </button>
             </div>
+            <div class="col-sm-6" id="color-col">
+               <div class="color-wrapper">
+                    <div id="word-color-picker">
+                        <span>Word color</span>
+                        <button class="add-on btn btn-success"><i></i></button>
+                    </div>
+                </div>
+                <div class="color-wrapper">
+                    
+                    <div id="highlight-picker">
+                        <span>Highlight color</span>
+                        <button class="add-on btn btn-success"><i></i></button>
+                    </div>
+                </div>
+        </div>
+        <div class="col-xs-12">
+                <div contenteditable id="sim" cols="2" rows="2"></div>
+        </div>    
         </div>
         <div class="row" id="stats-row">
             <div class="col-xs-12">
@@ -95,12 +107,44 @@
             </div>
         </div>
 
+    <div class="row" id="note-area">
+        <div class="col-xs-12">
+            <h2>Highlight text and select to create notes</h2>
+        </div>
+        <div class="col-xs-12">
+            <div class="row" id="note-row"></div>
+        </div>
+        <!-- <div id="note-group"></div> -->
     </div>
-        
+
+
+<!--     <div class='shighlighter-container'>
+        hahaha
+        <div>
+         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </div>
+    </div> -->
+
+    <div class='highlighter-container'>
+        <div>
+         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </div>
+    </div>
+    
+
+    </div>
+    
+
+
+
+
+
     <script type="text/template" id="new-note-template">
-      <div id="main">
-        <div id="todo-list"></div>
-      </div>
+        <div class="col-sm-6">
+        <div class="note-box">
+            <%= content %>
+        </div>
+        </div>
     </script>
 
         <!--<script type="text/javascript">
@@ -111,14 +155,23 @@
         </script>-->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="static/lib/jQuery.highlighter.js"></script>
         <script type="text/javascript" src="static/lib/bootstrap-colorpicker.min.js"></script>
         <script type="text/javascript" src="static/lib/underscore-min.js"></script>
         <script type="text/javascript" src="static/lib/backbone-min.js"></script>
+
+        <script type="text/javascript" src="static/lib/backbone.localStorage-min.js"></script>
         <!-- <script type="text/javascript" src="static/js/counter.js"></script> -->
 
         <!-- // <script type="text/javascript" src="js/speedreader.js"></script> -->
         <!-- // <script src="js/app.js"></script>         -->
         <!-- // <script type="text/javascript" src="js/fontsize.js"></script>         -->
+        <script type="text/javascript" src="static/js/models/note.js"></script>
+
+        <script type="text/javascript" src="static/js/collections/notes.js"></script>
+        
+        <script type="text/javascript" src="static/js/views/note.js"></script>
+
         <script type="text/javascript" src="static/js/app.js"></script>
 
 </body>

@@ -4,7 +4,9 @@
   "dependencies": {
     "mjolnic-bootstrap-colorpicker": "~2.3.0",
     "backbone": "~1.2.3",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "highlighter.js": "https://github.com/jeeschr/highlighter.js.git",
+    "backbone.localStorage": "backbone.localstorage#~1.1.16"
   },
   "private": true,
   "devDependencies": {
