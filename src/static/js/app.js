@@ -2,12 +2,22 @@ var timeoutID;
 var keepGoing = true;
 var boldWords;
 var sim;
+var start = $('#start-btn');
 var app = app || {};
+var pauseContinue = true;
+var startClickCounter=0;
+var numWords;
+var speed;
 
- function triggerDone() {
+function triggerDone() {
     console.log('triggerDone: ',wordCount);
     start.text('Start');
     startClickCounter=0;
+    removeSimHighlights();
+    timeoutID=0;
+    pauseContinue=true;
+    keepGoing=true;
+    window.clearTimeout(timeoutID);
     var wordCountBox = $('#wordCountBox');
     var timepassed = $('#timepassed');
     wordCountBox.text(wordCount);
@@ -21,7 +31,7 @@ var app = app || {};
 function setSim() {
     console.log('setSim');
     nn=0;
-    var speed = $('#speed').val();
+    speed = $('#speed').val();
     delay = 1/((speed/60)/1000);
     timeStart = $.now();
 
@@ -106,11 +116,14 @@ function clearSim(){
 };
 
 function removeSimHighlights(){
-    sim = $('#sim').text();
-    $('#sim').text()=sim;
-    // sim.each(function(e){
+    sim = $('#sim');
+    // sim.text("balakjaj");
+    // sim = $('#sim').text();
+    sim.text(function(){
+        return $(this).text().replace(/(<([^>]+)>)/ig, '');
+    });
+        
     // console.log('removing: ',sim);
-    // });
 }
 // function pauseSim(){
 //     console.log('pauseSim');
@@ -119,7 +132,7 @@ function removeSimHighlights(){
 
 
 (function(){
-'use strict';
+    'use strict';
     new app.NoteView();
     
     var highlightColorPicker = $('#highlight-picker').colorpicker();
@@ -128,7 +141,7 @@ function removeSimHighlights(){
     wordColorPicker.colorpicker('setValue','black');
     highlightColorPicker.colorpicker('setValue','black');
     
-    var start = $('#start-btn');
+    
     var clear = $('#clear-btn');
     var reset = $('#reset-btn');
     var incfont = $('#incfont-btn');
@@ -141,6 +154,10 @@ function removeSimHighlights(){
     var wordCount = 0;
     var wordCountBox = $('#wordCountBox');
     var textbox = $('#sim');
+
+
+
+
     // app.textbox = $('#sim');
 
     textbox.on('change keydown keypress keyup blur focus', counter);
@@ -172,10 +189,10 @@ function removeSimHighlights(){
         setSimNumWordsHighlight(numWords);
     });
 
-    var pauseContinue = true;
-    var startClickCounter=0;
+
     start.on("click", function (e) {
         e.stopPropagation();
+        removeSimHighlights();
         if (startClickCounter==0){
             console.log('clicked here');
             window.clearTimeout(timeoutID);
@@ -186,12 +203,15 @@ function removeSimHighlights(){
         }
         else{
              if (pauseContinue){
+                // removeSimHighlights();
+                nn=nn-1;
                 keepGoing=false;
                 start.text("Resume");
                 pauseContinue = false;
             }
             else{
-                console.log('keep going, nn: ',nn);
+                // console.log('keep going, nn: ',nn);
+                // removeSimHighlights();
                 keepGoing=true;
                 startSim();
                 start.text("Pause");
@@ -201,8 +221,10 @@ function removeSimHighlights(){
 
     });
     reset.on("click", function(e){
+
         e.stopPropagation();
         window.clearTimeout(timeoutID);
+        timeoutID=0;
         startClickCounter=0;
         pauseContinue=true;
         keepGoing=true;
@@ -213,6 +235,10 @@ function removeSimHighlights(){
         e.stopPropagation();
         window.clearTimeout(timeoutID);
         timeoutID=0;
+        startClickCounter=0;
+        pauseContinue=true;
+        keepGoing=true;
+        start.text("Start");
         clearSim();
     });
     incfont.on("click", function(e){
