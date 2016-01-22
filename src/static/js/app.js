@@ -216,13 +216,13 @@ function removeSimHighlights(){
         clearSim();
     });
     incfont.on("click", function(e){
-        curSize= parseInt($('#sim').css('font-size')) + 2;
+        var curSize= parseInt($('#sim').css('font-size')) + 2;
 
         if(curSize<=84)
           $('#sim').css('font-size', curSize);
     });
     decfont.on("click", function(e){
-        curSize= parseInt($('#sim').css('font-size')) - 2;
+        var curSize= parseInt($('#sim').css('font-size')) - 2;
         if(curSize>=10)
               $('#sim').css('font-size', curSize);
     });
