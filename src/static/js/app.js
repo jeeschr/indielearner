@@ -266,8 +266,7 @@ function removeSimHighlights(){
         document.head.insertBefore(styleElement, null);
         var styleSheet = styleElement.sheet;
         var ruleNum = styleSheet.cssRules.length;
-        styleSheet.insertRule(".grayx{color:rgb("+col.r+","+col.g+","+col.b+")",
-            ruleNum);
+        styleSheet.insertRule(".grayx{color:rgb("+col.r+","+col.g+","+col.b+");}",ruleNum);
     });
     wordColorPicker.on("changeColor.colorpicker", function(e){
         var col = e.color.toRGB();
