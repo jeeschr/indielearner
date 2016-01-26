@@ -14,12 +14,12 @@ var app = app || {};
 		},
 
 		initialize: function(){
-			console.log('initialized: ',this);
+			// console.log('initialized: ',this);
 			// this.render();
 		},
 
 		render: function(model){
-			console.log('rendering');
+			// console.log('rendering');
 			// this.$el.html(this.template({
 			// 	content: 'boo'
 			// }));

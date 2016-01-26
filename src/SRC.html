@@ -18,21 +18,20 @@
     </head>
     <body>
         
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/">Speed Reading</a>
+          <a class="navbar-brand" href="#">Speed Reading</a>
         </div>
       </div>
     </nav>
 
 
-    <div class="container">
+    <div class="container" id="header">
         <div class="row">
             <div class="col-xs-12">
-              <h1>Speed Reading</h1>
-              <h2>Paste your text to the textbox and get the word(s) count</h2> 
-                <h2>Highlight text and select to create notes at the bottom</h2> 
+                <h3>Paste your text to the textbox and get the word(s) count</h3> 
+                <h3>Highlight text and select to create notes at the bottom</h3> 
             </div>
         </div>
     </div>
@@ -43,16 +42,35 @@
                 <button id="start-btn" class="btn btn-primary btn-lg">Start</button>
                 <button id="reset-btn" class="btn btn-primary btn-lg">Reset</button>
                 <button id="clear-btn" class="btn btn-primary btn-lg">Clear</button>
-            </div>
-            <div class="col-xs-12" id="select-col">
+            <!-- </div> -->
+            <!-- <div class="col-xs-12" id="select-col"> -->
                 <div class="input-wrapper">
-                <input id="numWords" type="number" value="1" step="1" min="0" max="1000"/>
-                <span style="color:white;" for="speed">word(s) highlighted</span>
+                    <input id="numWords" type="number" value="1" step="1" min="1" max="10"/>
+                    <label style="color:white;" for="speed">word(s) highlighted</label>
                 </div>
                 <div class="input-wrapper">
-                <input id="speed" type="number" value="120" step="10" min="0" max="1000"/>
-                <span style="color:white;" for="speed">WPM</span>
+                    <input id="speed" type="number" value="120" step="10" min="0" max="1000"/>
+                    <label style="color:white;" for="speed">WPM</label>
                 </div>
+
+
+               <div class="color-wrapper">
+                    <div id="word-color-picker">
+                        
+                        <button class="add-on btn btn-success"><i></i></button>
+                        <label for="button" style="color:white;">Word color</label>
+                    </div>
+                </div>
+                <div class="color-wrapper">
+                    
+                    <div id="highlight-picker">
+                        
+                        <button class="add-on btn btn-success"><i></i></button>
+                        <label style="color:white;">Highlight color</label>
+                    </div>
+                </div>
+
+
             </div>
         </div>
 
@@ -63,22 +81,10 @@
                 </button>
             </div>
             <div class="col-sm-6" id="color-col">
-               <div class="color-wrapper">
-                    <div id="word-color-picker">
-                        <span>Word color</span>
-                        <button class="add-on btn btn-success"><i></i></button>
-                    </div>
-                </div>
-                <div class="color-wrapper">
-                    
-                    <div id="highlight-picker">
-                        <span>Highlight color</span>
-                        <button class="add-on btn btn-success"><i></i></button>
-                    </div>
-                </div>
+
         </div>
         <div class="col-xs-12">
-                <div contenteditable id="sim" cols="2" rows="2"></div>
+                <div spellcheck="false" contenteditable="true" id="sim" cols="2" rows="2"></div>
         </div>    
         </div>
         <div class="row" id="stats-row">
@@ -112,16 +118,7 @@
         <div class="col-xs-12">
             <div class="row" id="note-row"></div>
         </div>
-        <!-- <div id="note-group"></div> -->
     </div>
-
-
-<!--     <div class='shighlighter-container'>
-        hahaha
-        <div>
-         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        </div>
-    </div> -->
 
     <div class='highlighter-container'>
         <div>
@@ -132,9 +129,6 @@
 
     </div>
     
-
-
-
 
 
     <script type="text/template" id="new-note-template">
@@ -159,6 +153,8 @@
         <script type="text/javascript" src="static/lib/backbone-min.js"></script>
 
         <script type="text/javascript" src="static/lib/backbone.localStorage-min.js"></script>
+
+        <script type="text/javascript" src="static/lib/html-to-text.bundle.js"></script>
         <!-- <script type="text/javascript" src="static/js/counter.js"></script> -->
 
         <!-- // <script type="text/javascript" src="js/speedreader.js"></script> -->
