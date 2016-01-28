@@ -34,6 +34,15 @@ module.exports = function(grunt) {
         dest: 'src/static/css/style.min.css'
       }
     },
+    jshint: {
+      files: ['src/static/js/app.js'],
+      options: {
+        browser: true,
+        globals: {
+          jQuery: true
+        }
+      }
+    },
 
     // cssnano: {
     //   dist: {
@@ -77,11 +86,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-postcss');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-browser-sync');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   // grunt.loadNpmTasks('grunt-contrib-jshint');
   // grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // grunt.registerTask('boot', ['postcss', 'cssnano']);
   grunt.registerTask('default', ['browserSync', 'watch']);
+  grunt.registerTask('hint', 'Run hinting', ['jshint']);
   // grunt.registerTask('test', ['browserSync', 'watch']); 
   // grunt.registerTask('deploy', ['browserSync', 'watch']);   
 

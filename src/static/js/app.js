@@ -11,10 +11,10 @@ var speed = 0;
 var wordCount = 0;
 var delay = 0;
 var textbox = $('#sim');
-var scrollWidth = 2;
+var scrollWidth = 0;
 var nn=0;
-var wordArray= new Array();
-var alreadyRead = new Array();
+var wordArray= [];
+var alreadyRead = [];
 var highlightColorPicker;
 var wordColorPicker;
 
@@ -126,9 +126,10 @@ function checkScroll(){
     // console.log('width: ', width);
     // console.log('height: ', height);
     var loc = $('#sim span:last');
-    // console.log('highlight offset: ',loc.offset().left);
-    if(loc.position()!=undefined){
-        var pos =  loc.position().left-$(window).scrollLeft();
+    console.log('highlight pos: ',loc.position().left);
+    console.log('win: ',$(window).scrollLeft());
+    if(loc.position()!==undefined){
+        var pos =  loc.position().left;
         // console.log('highlight position: ',pos);
         // console.log('scrollTop: ',loc.offset().top);
         if(pos<0){
@@ -295,7 +296,7 @@ function setColors(){
             // console.log('wordCount: ',wordCount);
             e.stopPropagation();
             // removeSimHighlights(textbox);
-            if (startClickCounter==0){
+            if (startClickCounter===0){
                 // console.log('clicked here');
                 window.clearTimeout(timeoutID);
                 setSim();
