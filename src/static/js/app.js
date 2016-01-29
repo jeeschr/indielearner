@@ -56,37 +56,6 @@ function triggerDone() {
     timepassed.text(timeRes);
 }
 
-function setSim() {
-    // console.log('setSim');
-    // textCounter=0;
-    // speed = $('#speed').val();
-    // delay = 1/((speed/60)/1000);
-    // timeStart = $.now();
-
-    // // boldWords = speed / 60;
-    // // boldWords = boldWords < 1 ? 1 : Math.round(boldWords);
-    // // console.log('bolding: ',boldWords);
-    // if (!boldWords){
-    //     // console.log('if clause');
-    //     boldWords = 1;
-    // }
-    // timeStart = $.now();
-    // sim = $('#sim').text();
-    // var value;
-    // wordArray = sim.split(/[\s]+/);
-    // // simWrap = $('#sim');
-
-
-    // var words = $('#sim').html();
-    // var result = htmlToText.fromString(words);
-    // // console.log('count result: ',result);
-    // wordArray = result.trim().replace(/\s+/g, ' ').split(' ');
-    
-
-    // arrCount = wordArray.length;
-    
-    // wordCount = 0;
-}
 function setSimData(){
     var words = textbox.html();
     result = htmlToText.fromString(words);
@@ -95,6 +64,7 @@ function setSimData(){
     arrCount = wordArray.length; 
     timeStart = $.now();
 }
+
 function setSimSpeed(){
     var speed = getSpeed.val();
     delay = 1/((speed/60)/1000);
@@ -133,12 +103,7 @@ function startSim(){
             // update global counter
             textCounter = n;
 
-            // var pos = textCounter;
-            // if (pos < 0){
-            //     pos = 0;
-            // }
-
-            alreadyRead.push(wordArray[textCounter]);
+            // alreadyRead.push(wordArray[textCounter]);
 
             wordArray[textCounter] = '<span class="grayx">' + wordArray[textCounter] + '</span>';
 
@@ -262,7 +227,7 @@ function removeColors(){
     var ruleNum = styleSheet.cssRules.length;
     
     styleSheet.insertRule("#sim{color:rgba(0,0,0,0.7);}",ruleNum);
-    styleSheet.insertRule("#sim .grayx{color:rgba(200,0,0,1);text-shadow:0 0 10px rgba(0,0,0,1);}",ruleNum+1);
+    // styleSheet.insertRule("#sim .grayx{color:rgba(200,0,0,1);text-shadow:0 0 10px rgba(0,0,0,1);}",ruleNum+1);
 }
 
 (function(){
@@ -287,11 +252,6 @@ function removeColors(){
     var incfont = $('#incfont-btn');
     var decfont = $('#decfont-btn');
     var fontdec = $('select[name=font-decision]');
-
-
-    // var wordCountBox = $('#wordCountBox');
-    
-    // app.textbox = $('#sim');
 
     textbox.text('Four score and seven years ago our fathers brought ' +
         'forth on this continent, a new nation, conceived in Liberty, ' +
@@ -321,19 +281,6 @@ function removeColors(){
     getNumWordsHighlight.on("change", function(e){
         e.stopPropagation();
         setSimNumWordsHighlight();
-        // var oldNumWords = numWordsHighlight;
-        // numWordsHighlight = getNumWordsHighlight.val();
-        // console.log('numWords: ',numWordsHighlight);
-        
-        // removeSimHighlights(textbox);
-        // if (numWords<=oldNumWords){
-            // con/sole.log('yep');
-            // counter=counter-(numWords)+1;
-        // }
-        // if (oldNumWords<numWords){
-            // console.log('in here');
-            // counter=counter-(numWords);
-        // }
     });
 
     start.on("click", function (e) {
