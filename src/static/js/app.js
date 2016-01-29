@@ -1,33 +1,51 @@
-var timeoutID;
-var keepGoing = true;
-var boldWords;
-var sim;
-var start = $('#start-btn');
 var app = app || {};
-var pauseContinue = true;
-var startClickCounter=0;
-var numWordsHighlight = 1;
-var speed = 0;
-var wordCount = 0;
-var delay = 0;
-var textbox = $('#sim');
+
+var timeoutID;
+
+// detect pause
+var keepGoing = true;
+var pauseButton = false;
+
+
+
+
+
+
 var scrollWidth = 0;
-var nn=0;
-var wordArray= [];
+var textCounter = 0;
+
 var alreadyRead = [];
+
+// var speed = 0;
+
+// var numWordsHighlight = 1;
+
+var wordArray= [];
+
+var arrCount = 0;
+var wordCount = 0;
+var result;
+var textbox = $('#sim');
+var startClickCounter = 0;
+var boldWords = 1;
+var delay = 1;
 var highlightColorPicker;
 var wordColorPicker;
+var getNumWordsHighlight = $('#numWords');
+var getSpeed = $('#speed');
 
 function triggerDone() {
-    // console.log('triggerDone: ',wordCount);
+    console.log('triggerDone: ',wordCount);
+    var start = $('#start-btn');
     start.text('Start');
-    startClickCounter=0;
+    startClickCounter = 0;
     // removeSimHighlights();
-    timeoutID=0;
-    pauseContinue=true;
-    keepGoing=true;
-
     window.clearTimeout(timeoutID);
+    timeoutID = 0;
+    // pauseContinue = true;
+    keepGoing = true;
+    textCounter=0;
+    
     var wordCountBox = $('#wordCountBox');
     var timepassed = $('#timepassed');
     wordCountBox.text(wordCount);
@@ -40,82 +58,108 @@ function triggerDone() {
 
 function setSim() {
     // console.log('setSim');
-    nn=0;
-    speed = $('#speed').val();
-    delay = 1/((speed/60)/1000);
-    timeStart = $.now();
+    // textCounter=0;
+    // speed = $('#speed').val();
+    // delay = 1/((speed/60)/1000);
+    // timeStart = $.now();
 
-    // boldWords = speed / 60;
-    // boldWords = boldWords < 1 ? 1 : Math.round(boldWords);
-    // console.log('bolding: ',boldWords);
-    if (!boldWords){
-        // console.log('if clause');
-        boldWords = 1;
-    }
-    timeStart = $.now();
-    sim = $('#sim').text();
-    var value;
-    wordArray = sim.split(/[\s]+/);
-    // simWrap = $('#sim');
+    // // boldWords = speed / 60;
+    // // boldWords = boldWords < 1 ? 1 : Math.round(boldWords);
+    // // console.log('bolding: ',boldWords);
+    // if (!boldWords){
+    //     // console.log('if clause');
+    //     boldWords = 1;
+    // }
+    // timeStart = $.now();
+    // sim = $('#sim').text();
+    // var value;
+    // wordArray = sim.split(/[\s]+/);
+    // // simWrap = $('#sim');
 
 
-    var words = $('#sim').html();
-    var result = htmlToText.fromString(words);
+    // var words = $('#sim').html();
+    // var result = htmlToText.fromString(words);
+    // // console.log('count result: ',result);
+    // wordArray = result.trim().replace(/\s+/g, ' ').split(' ');
+    
+
+    // arrCount = wordArray.length;
+    
+    // wordCount = 0;
+}
+function setSimData(){
+    var words = textbox.html();
+    result = htmlToText.fromString(words);
     // console.log('count result: ',result);
     wordArray = result.trim().replace(/\s+/g, ' ').split(' ');
-    
-
-    arrCount = wordArray.length;
-    
-    wordCount = 0;
+    arrCount = wordArray.length; 
+    timeStart = $.now();
 }
-
 function setSimSpeed(){
+    var speed = getSpeed.val();
     delay = 1/((speed/60)/1000);
 }
 
-function setSimNumWordsHighlight(num){
-    boldWords = num;
+function setSimNumWordsHighlight(){
+    var oldBoldWords = boldWords;
+    boldWords = getNumWordsHighlight.val();
+    removeSimHighlights();
+    if(boldWords<oldBoldWords){
+        // console.log('less than');
+        textCounter=textCounter-1;
+    }
+}
+
+function wordCounter() {
+
+    wordCount = arrCount;
+
+    if (!result)
+        $('#wordCount').text(0);
+    else
+        $('#wordCount').text(wordCount);
 }
 
 function startSim(){
-    // console.log('startSim');
     (function fn(n){  
-        // console.log('in function fn, n: ',n);
-        // console.log('keepGoing: ',keepGoing); 
+        // check if paused
         if(keepGoing){
-            nn=n;
-            var pos = n;
-            if (pos < 0) {
-                pos = 0;
-            }
-            alreadyRead.push(wordArray[pos]);
+            console.log('keepGoing');
 
-            wordArray[pos] = '<span class="grayx">' + wordArray[pos] + '</span>';
-            // console.log('pos: ',pos);
-            // console.log('boldWords: ',boldWords);
-            if (pos > (boldWords - 1)) {
-                wordArray[pos - boldWords] = wordArray[pos - boldWords].replace("x", "dim");
-            }
-            var words = wordArray.join(" ");
-            textbox.html(words);
-            // console.log('simWrap: ',simWrap);
-
-            ++wordCount;
-            // console.log('wordCount: ',wordCount);
-            if (pos == (arrCount - 1)) {
+            if (n == (arrCount - 1)) {
                 triggerDone();
             }
-            // console.log('#sim loc: ',$('#sim'));
+
+            // update global counter
+            textCounter = n;
+
+            // var pos = textCounter;
+            // if (pos < 0){
+            //     pos = 0;
+            // }
+
+            alreadyRead.push(wordArray[textCounter]);
+
+            wordArray[textCounter] = '<span class="grayx">' + wordArray[textCounter] + '</span>';
+
+            if (textCounter > (boldWords - 1)) {
+                wordArray[textCounter - boldWords] = wordArray[textCounter - boldWords].replace("grayx", "");
+            }
+
+            var words = wordArray.join(" ");
+            textbox.html(words);
+
+            // ++wordCount;
+
             checkScroll();
-            // $('#sim span:last')[0].scrollIntoView(false);
-            
-            if(n<(arrCount-1))
+
+            if(textCounter<(arrCount-1))
                 timeoutID = setTimeout(function(){
                   fn(++n);
                 },(delay));
+
        }
-    }(nn));
+    }(textCounter));
 }
 
 function checkScroll(){
@@ -126,8 +170,8 @@ function checkScroll(){
     // console.log('width: ', width);
     // console.log('height: ', height);
     var loc = $('#sim span:last');
-    console.log('highlight pos: ',loc.position().left);
-    console.log('win: ',$(window).scrollLeft());
+    // console.log('highlight pos: ',loc.position().left);
+    // console.log('win: ',$(window).scrollLeft());
     if(loc.position()!==undefined){
         var pos =  loc.position().left;
         // console.log('highlight position: ',pos);
@@ -137,7 +181,7 @@ function checkScroll(){
             if(scrollWidth>width){
                 // console.log('less: ',pos);   
                 // $('#sim').scrollLeft(0);
-                scrollWidth=0;
+                scrollWidth = 0;
             }
             if(scrollWidth<width){
                 $('#sim').scrollLeft(0);
@@ -156,26 +200,17 @@ function checkScroll(){
     
 
 }
-
-function counter() {
-    var words = $(this).html();
-    var result = htmlToText.fromString(words);
-    // console.log('count result: ',result);
-    wordCount = result.trim().replace(/\s+/g, ' ').split(' ').length;
-    // console.log('length: ',length);
-    if (!result)
-        $('#wordCount').text(0);
-    else
-        $('#wordCount').text(wordCount);
+function resetSimScroll(){
+    $('#sim').scrollLeft(0);
 }
+
 
 function clearSim(){
-    var sim = $('#sim');
-    sim.empty();
+    textbox.empty();
 }
 
-function removeSimHighlights(text){
-    var words = $(text).html();
+function removeSimHighlights(){
+    var words = textbox.html();
     var result = htmlToText.fromString(words);
     $('#sim')[0].textContent = result;
     // sim = $('#sim');
@@ -203,25 +238,31 @@ function removeSimHighlights(text){
 // }
 
 function setColors(){
-    // console.log('colorpicker: ',highlightColorPicker);
-     // highlightColorPicker.on("changeColor.colorpicker", function(e){
-        // var col = highlightColorPicker.colorpicker.color.toRGB();
-        // $('#text-row #sim .grayx').css({'color':'rgb('+col.r+','+col.g+','+col.b+')'});
-        // $('#text-row #sim .grayx').css({'text-shadow':'0 0 0px rgb('+col.r+','+col.g+','+col.b+')'});
+    var wordCol = wordColorPicker.colorpicker('getValue');
+    var highCol = highlightColorPicker.colorpicker('getValue');
 
-        // var styleElement = document.createElement("style");
-        // styleElement.type = "text/css";
-        // document.head.insertBefore(styleElement, null);
-        // var styleSheet = styleElement.sheet;
-        // var ruleNum = styleSheet.cssRules.length;
-        // styleSheet.insertRule(".grayx{color:rgb("+col.r+","+col.g+","+col.b+");}",ruleNum);
-    // });
+    // console.log('wordCol: ',wordCol);
+    // console.log('highCol: ',highCol);
 
-    // wordColorPicker.on("changeColor.colorpicker", function(e){
-    //     var col = e.color.toRGB();
-    //     $('#text-row #sim').css({'color':'rgb('+col.r+','+col.g+','+col.b+')'});
-    //     $('#text-row #sim .graydim').css({'color':'rgb('+col.r+','+col.g+','+col.b+')'});
-    // });
+    var styleElement = document.createElement("style");
+    styleElement.type = "text/css";
+    document.head.insertBefore(styleElement, null);
+    var styleSheet = styleElement.sheet;
+    var ruleNum = styleSheet.cssRules.length;
+    
+    styleSheet.insertRule("#sim{color:"+wordCol+";}",ruleNum);
+    styleSheet.insertRule("#sim .grayx{color:"+highCol+";text-shadow:0 0 1px "+highCol+";}",ruleNum+1);
+
+}
+function removeColors(){
+    var styleElement = document.createElement("style");
+    styleElement.type = "text/css";
+    document.head.insertBefore(styleElement, null);
+    var styleSheet = styleElement.sheet;
+    var ruleNum = styleSheet.cssRules.length;
+    
+    styleSheet.insertRule("#sim{color:rgba(0,0,0,0.7);}",ruleNum);
+    styleSheet.insertRule("#sim .grayx{color:rgba(200,0,0,1);text-shadow:0 0 10px rgba(0,0,0,1);}",ruleNum+1);
 }
 
 (function(){
@@ -229,96 +270,106 @@ function setColors(){
 
     new app.NoteView();
     
-    highlightColorPicker = $('#highlight-picker').colorpicker();
+    highlightColorPicker = $('#highlight-picker').colorpicker({
+        format: 'rgba'
+    });
+
     wordColorPicker = $('#word-color-picker').colorpicker({
         format: 'rgba'
     });
 
-    wordColorPicker.colorpicker('setValue','rgba(0,0,0,0.1)');
+    wordColorPicker.colorpicker('setValue','rgba(240,240,240,0.7)');
     highlightColorPicker.colorpicker('setValue','black');
     
+    var start = $('#start-btn');
     var clear = $('#clear-btn');
     var reset = $('#reset-btn');
     var incfont = $('#incfont-btn');
     var decfont = $('#decfont-btn');
-    
-    var getSpeed = $('#speed');
-    var getNumWordsHighlight = $('#numWords');
-
     var fontdec = $('select[name=font-decision]');
-    var wordCountBox = $('#wordCountBox');
+
+
+    // var wordCountBox = $('#wordCountBox');
     
     // app.textbox = $('#sim');
 
-    textbox.on('change keydown keypress keyup blur focus', counter);
-    // textbox.on('change keydown keypress keyup blur focus', cleanText);
+    textbox.text('Four score and seven years ago our fathers brought ' +
+        'forth on this continent, a new nation, conceived in Liberty, ' +
+        'and dedicated to the proposition that all men are created equal.');
+
+    textbox.on('change keydown keypress keyup blur focus', function(){
+        setSimData();
+        wordCounter();
+    });
 
     textbox.highlighter({
         'complete': function (data) {
             // console.log('data: ',data);
-            this.note = data;
+            // this.note = data;
             app.note = data;
             return app.note;
         }
     });
 
-    // textbox.bind("mouseup", function(){
-    //     console.log('highlighted text');
-    // });
+   
 
     getSpeed.on("change", function(e){
-        // console.log('speed change');
         e.stopPropagation();
-        speed = getSpeed.val();
         setSimSpeed();
     });
 
     getNumWordsHighlight.on("change", function(e){
         e.stopPropagation();
-        var oldNumWords = numWordsHighlight;
-        numWordsHighlight = getNumWordsHighlight.val();
+        setSimNumWordsHighlight();
+        // var oldNumWords = numWordsHighlight;
+        // numWordsHighlight = getNumWordsHighlight.val();
         // console.log('numWords: ',numWordsHighlight);
-        setSimNumWordsHighlight(numWordsHighlight);
+        
         // removeSimHighlights(textbox);
         // if (numWords<=oldNumWords){
             // con/sole.log('yep');
-            // nn=nn-(numWords)+1;
+            // counter=counter-(numWords)+1;
         // }
         // if (oldNumWords<numWords){
             // console.log('in here');
-            // nn=nn-(numWords);
+            // counter=counter-(numWords);
         // }
     });
 
     start.on("click", function (e) {
+        // detect if anything in textbox
+        // console.log('clicked');
+        e.stopPropagation();
         if(wordCount){
+
             setColors();
-            // console.log('wordCount: ',wordCount);
-            e.stopPropagation();
-            // removeSimHighlights(textbox);
-            if (startClickCounter===0){
-                // console.log('clicked here');
+            setSimNumWordsHighlight();
+            setSimSpeed();
+
+            if(startClickCounter===0){
+                textCounter = 0;
                 window.clearTimeout(timeoutID);
-                setSim();
+                // console.log('setSimData');
+                setSimData();
                 startSim();
+                ++startClickCounter;
                 start.text("Pause");
-                startClickCounter++;
+                pauseButton=true;
             }
             else{
-                 if (pauseContinue){
-                    // removeSimHighlights(textbox);
-                    nn=nn+1;
+                if(pauseButton){
+                    console.log('paused');
                     keepGoing=false;
                     start.text("Resume");
-                    pauseContinue = false;
+                    pauseButton=false;
+                    removeColors();
+                    ++textCounter;
                 }
                 else{
-                    // console.log('keep going, nn: ',nn);
-                    // removeSimHighlights();
                     keepGoing=true;
-                    startSim();
                     start.text("Pause");
-                    pauseContinue = true;
+                    pauseButton=true;
+                    startSim();
                 }
             }
         }
@@ -328,12 +379,18 @@ function setColors(){
 
         e.stopPropagation();
         window.clearTimeout(timeoutID);
-        timeoutID=0;
-        startClickCounter=0;
-        pauseContinue=true;
-        keepGoing=true;
+        timeoutID = 0;
+
+        textCounter = 0;
+        startClickCounter = 0;
+        pauseButton = false;
+        keepGoing = true;
+
         start.text("Start");
-        removeSimHighlights(textbox);
+        removeColors();
+
+        removeSimHighlights();
+        resetSimScroll();
 
     });
 
@@ -342,20 +399,18 @@ function setColors(){
         window.clearTimeout(timeoutID);
         timeoutID=0;
         startClickCounter=0;
-        pauseContinue=true;
+        pauseButton=false;
         keepGoing=true;
         start.text("Start");
         clearSim();
     });
 
     incfont.on("click", function(e){
-        // document.execCommand('fontsize', false, '5');
-        // console.log('incFont: ',$('#sim'));
         var curSize= parseInt($('#sim').css('font-size')) + 2;
 
         if(curSize<=84){
             $('#sim').css('font-size', curSize+'px');
-            $('#sim').find('h2, h1, h3, h4').css('font-size', curSize+'px');
+            $('#sim').find('h2, h1, h3, h4, span').css('font-size', curSize+'px');
         }
           
     });
@@ -365,7 +420,7 @@ function setColors(){
 
         if(curSize>=10){
             $('#sim').css('font-size', curSize+'px');
-            $('#sim').find('h2, h1, h3, h4').css('font-size', curSize+'px');
+            $('#sim').find('h2, h1, h3, h4, span').css('font-size', curSize+'px');
         }
               
     });
@@ -376,26 +431,11 @@ function setColors(){
     });
 
     highlightColorPicker.on("changeColor.colorpicker", function(e){
-        var col = e.color.toRGB();
-        $('#text-row #sim .grayx').css({'color':'rgb('+col.r+','+col.g+','+col.b+')'});
-        $('#text-row #sim .grayx').css({'text-shadow':'0 0 0px rgb('+col.r+','+col.g+','+col.b+')'});
-
-        var styleElement = document.createElement("style");
-        styleElement.type = "text/css";
-        document.head.insertBefore(styleElement, null);
-        var styleSheet = styleElement.sheet;
-        var ruleNum = styleSheet.cssRules.length;
-        styleSheet.insertRule(".grayx{color:rgb("+col.r+","+col.g+","+col.b+");}",ruleNum);
+        setColors();
     });
 
     wordColorPicker.on("changeColor.colorpicker", function(e){
-        var col = e.color.toRGB();
-        $('#text-row #sim').css({'color':'rgb('+col.r+','+col.g+','+col.b+')'});
-        $('#text-row #sim .graydim').css({'color':'rgb('+col.r+','+col.g+','+col.b+')'});
-        var highCol = highlightColorPicker.colorpicker('getValue');
-        $('#text-row #sim .grayx').css({'color':'rgb('+highCol.r+','+highCol.g+','+highCol.b+')'});
-        $('#text-row #sim .grayx').css({'text-shadow':'0 0 0px rgb('+highCol.r+','+highCol.g+','+highCol.b+')'});
-
+        setColors();
     });
 
 })(jQuery);

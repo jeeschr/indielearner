@@ -30,66 +30,135 @@
     <div class="container" id="header">
         <div class="row">
             <div class="col-xs-12">
-                <h3>Paste your text to the textbox and get the word(s) count</h3> 
+                <h3>Paste your text into the textbox and get the word(s) count</h3> 
                 <h3>Highlight text and select to create notes at the bottom</h3> 
             </div>
         </div>
     </div>
 
     <div class="container" id="main">
-        <div class="row" id="ctrl-row">
-            <div class="col-xs-12" id="btn-col">
+        <div class="row">
+            <div class="col-xs-12">
+
+
+
+            <div id="controls">
                 <button id="start-btn" class="btn btn-primary btn-lg">Start</button>
                 <button id="reset-btn" class="btn btn-primary btn-lg">Reset</button>
                 <button id="clear-btn" class="btn btn-primary btn-lg">Clear</button>
-            <!-- </div> -->
-            <!-- <div class="col-xs-12" id="select-col"> -->
-                <div class="input-wrapper">
-                    <input id="numWords" type="number" value="1" step="1" min="1" max="10"/>
+            </div>
+
+            <div id="speed-options">
+                <div class="control input-wrapper">
+                    <input id="numWords" type="number" value="3" step="1" min="1" max="10"/>
                     <label style="color:white;" for="speed">word(s) highlighted</label>
                 </div>
-                <div class="input-wrapper">
-                    <input id="speed" type="number" value="120" step="10" min="0" max="1000"/>
+                <div class="control input-wrapper">
+                    <input id="speed" type="number" value="240" step="10" min="1" max="1000"/>
+                    <label style="color:white;" for="speed">WPM</label>
+                </div>
+            </div>
+
+
+            <div id="font-options">    
+
+                <button class="btn btn-lg btn-primary" id="incfont-btn">A+</button>
+                <button class="btn btn-lg btn-primary" id="decfont-btn">A-</button> 
+
+                <select name="font-decision">
+                    <option>Arial</option>
+                    <option selected="selected">Times New Roman</option>
+                    <option>Sans-Serif</option>
+                    <option>Serif</option>
+                    <option>Times</option>
+                    <option>Georgia</option>
+                    <option>Verdana</option>
+                    <option>Courier New</option>
+                    <option>Courier</option>
+                    <option>Lucida Console</option>
+                    <option>Monotype Corsiva</option>
+                    <option>Century Gothic</option>
+                    <option>Comic Sans MS</option>                
+                    <option>Monospace</option>
+                    <option>Helvetica</option>
+                </select>
+            </div>
+
+
+
+
+            <div id="stats">
+                <button class="btn btn-default btn-lg" type="button">
+                  Word Count <span id="wordCount" class="badge">0</span>
+                </button>
+
+                <button class="btn btn-default btn-lg">
+                    <span class="badge" id="wordCountBox">0</span> words read in <span class="badge" id="timepassed">0</span> <span id="time-denom">second(s)</span>
+                </button>
+
+            </div>
+
+
+            <div id="color-options">
+                                <div class="color-picker">
+                    <div id="word-color-picker">
+                        <button class="add-on btn btn-primary"><span>Text color</span><i></i></button>
+                    </div>
+                </div>
+                <div class="color-picker">
+                    <div id="highlight-picker">
+                        <button class="add-on btn btn-primary"> <span>Cursor color</span> <i></i></button>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div spellcheck="false" contenteditable="true" id="sim" cols="2" rows="2"></div>
+            </div>
+        </div>
+    </div>
+<!--         <div class="row" id="ctrl-row">
+            <div class="col-xs-12" id="btn-col">
+
+                <button id="start-btn" class="btn btn-primary btn-lg">Start</button>
+                <button id="reset-btn" class="btn btn-primary btn-lg">Reset</button>
+                <button id="clear-btn" class="btn btn-primary btn-lg">Clear</button>
+
+                <div class="control input-wrapper">
+                    <input id="numWords" type="number" value="3" step="1" min="1" max="10"/>
+                    <label style="color:white;" for="speed">word(s) highlighted</label>
+                </div>
+                <div class="control input-wrapper">
+                    <input id="speed" type="number" value="240" step="10" min="1" max="1000"/>
                     <label style="color:white;" for="speed">WPM</label>
                 </div>
 
 
-               <div class="color-wrapper">
-                    <div id="word-color-picker">
-                        
-                        <button class="add-on btn btn-success"><i></i></button>
-                        <label for="button" style="color:white;">Word color</label>
-                    </div>
-                </div>
-                <div class="color-wrapper">
-                    
-                    <div id="highlight-picker">
-                        
-                        <button class="add-on btn btn-success"><i></i></button>
-                        <label style="color:white;">Highlight color</label>
-                    </div>
-                </div>
+
 
 
             </div>
-        </div>
+        </div> -->
 
-        <div class="row" id="text-row">
+<!--         <div class="row" id="text-row">
             <div class="col-xs-12 col-sm-6">
                 <button class="btn btn-default btn-lg" type="button">
                   Word Count <span id="wordCount" class="badge">0</span>
                 </button>
             </div>
             <div class="col-sm-6" id="color-col">
-
-        </div>
+            </div>
         <div class="col-xs-12">
-                <div spellcheck="false" contenteditable="true" id="sim" cols="2" rows="2"></div>
+            <div spellcheck="false" contenteditable="true" id="sim" cols="2" rows="2"></div>
         </div>    
-        </div>
-        <div class="row" id="stats-row">
-            <div class="col-xs-12">
-                <span id="wordCountBox">0</span> words read in <span id="timepassed">0</span> second(s)
+        </div> -->
+
+        <!-- <div class="row" id="stats-row"> -->
+            <!-- <div class="col-xs-12"> -->
+<!--                 <span id="wordCountBox">0</span> words read in <span id="timepassed">0</span> second(s)
                 <div id="font-size-btn">
                     <select name="font-decision" >
                         <option>Arial</option>
@@ -110,9 +179,9 @@
                     </select>
                     <button class="btn btn-lg btn-primary" id="incfont-btn">A+</button>
                     <button class="btn btn-lg btn-primary" id="decfont-btn">A-</button> 
-                </div>
-            </div>
-        </div>
+                </div> -->
+            <!-- </div> -->
+        <!-- </div> -->
 
     <div class="row" id="note-area">
         <div class="col-xs-12">
@@ -127,7 +196,7 @@
     </div>
     
 
-    </div>
+    
     
 
 
@@ -155,11 +224,7 @@
         <script type="text/javascript" src="static/lib/backbone.localStorage-min.js"></script>
 
         <script type="text/javascript" src="static/lib/html-to-text.bundle.js"></script>
-        <!-- <script type="text/javascript" src="static/js/counter.js"></script> -->
 
-        <!-- // <script type="text/javascript" src="js/speedreader.js"></script> -->
-        <!-- // <script src="js/app.js"></script>         -->
-        <!-- // <script type="text/javascript" src="js/fontsize.js"></script>         -->
         <script type="text/javascript" src="static/js/models/note.js"></script>
 
         <script type="text/javascript" src="static/js/collections/notes.js"></script>

@@ -31,7 +31,7 @@ var app = app || {};
 
 		createOnClick: function(event){
 
-			console.log('clicked, app: ',app.note);
+			// console.log('clicked, app: ',app.note);
 			// console.log('clicked, this: ',this);
 			// console.log('clicked, event: ',event);
 			app.Notes.create({
@@ -39,7 +39,7 @@ var app = app || {};
 			});
 			// addOne(app.Notes);
 			var length = app.Notes.models.length;
-			console.log(app.Notes.models[length-1]);
+			// console.log(app.Notes.models[length-1]);
 			this.render(app.Notes.models[length-1]);
 		}
 
